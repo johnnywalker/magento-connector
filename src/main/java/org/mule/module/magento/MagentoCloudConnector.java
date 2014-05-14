@@ -251,8 +251,8 @@ public class MagentoCloudConnector {
     @Processor
     public boolean addOrderShipmentComment(String shipmentId,
                                            String comment,
-                                           @Optional @Default("false") boolean sendEmail,
-                                           @Optional @Default("false") boolean includeCommentInEmail)
+                                           @Default("false") boolean sendEmail,
+                                           @Default("false") boolean includeCommentInEmail)
 
     {
         return orderClient.addOrderShipmentComment(shipmentId, comment, sendEmail, includeCommentInEmail);
@@ -304,10 +304,10 @@ public class MagentoCloudConnector {
      */
     @Processor
     public String createOrderShipment(String orderId,
-                                      @Optional @Default("#[payload]") @Placement(group = "Item Ids and Quantities") List<OrderItemIdQty> itemsQuantities,
+                                      @Default("#[payload]") @Placement(group = "Item Ids and Quantities") List<OrderItemIdQty> itemsQuantities,
                                       @Optional String comment,
-                                      @Optional @Default("false") boolean sendEmail,
-                                      @Optional @Default("false") boolean includeCommentInEmail) {
+                                      @Default("false") boolean sendEmail,
+                                      @Default("false") boolean includeCommentInEmail) {
         return orderClient.createOrderShipment(orderId, itemsQuantities, comment, sendEmail, includeCommentInEmail);
     }
 
@@ -474,7 +474,7 @@ public class MagentoCloudConnector {
     public boolean addOrderComment(String orderId,
                                    String status,
                                    String comment,
-                                   @Optional @Default("false") boolean sendEmail) {
+                                   @Default("false") boolean sendEmail) {
         return orderClient.addOrderComment(orderId, status, comment, sendEmail);
     }
 
@@ -506,10 +506,10 @@ public class MagentoCloudConnector {
      */
     @Processor
     public String createOrderInvoice(String orderId,
-                                     @Optional @Default("#[payload]") @Placement(group = "Item Ids and Quantities") List<OrderItemIdQty> itemsQuantities,
-                                     @Optional String comment,
-                                     @Optional @Default("false") boolean sendEmail,
-                                     @Optional @Default("false") boolean includeCommentInEmail) {
+                                     @Default("#[payload]") @Placement(group = "Item Ids and Quantities") List<OrderItemIdQty> itemsQuantities,
+                                     String comment,
+                                     @Default("false") boolean sendEmail,
+                                     @Default("false") boolean includeCommentInEmail) {
         return orderClient.createOrderInvoice(orderId, itemsQuantities, comment, sendEmail,
                 includeCommentInEmail);
     }
@@ -528,8 +528,8 @@ public class MagentoCloudConnector {
     @Processor
     public boolean addOrderInvoiceComment(String invoiceId,
                                           String comment,
-                                          @Optional @Default("false") boolean sendEmail,
-                                          @Optional @Default("false") boolean includeCommentInEmail) {
+                                          @Default("false") boolean sendEmail,
+                                          @Default("false") boolean includeCommentInEmail) {
         return orderClient.addOrderInvoiceComment(invoiceId, comment, sendEmail, includeCommentInEmail);
     }
 
@@ -581,7 +581,7 @@ public class MagentoCloudConnector {
      * @return a new customer address id
      */
     @Processor
-    public int createCustomerAddress(int customerId, @Optional @Default("#[payload]")
+    public int createCustomerAddress(int customerId, @Default("#[payload]")
             @Placement(group = "Address Attributes") CustomerAddressEntityCreate customerAddress) {
         return customerClient.createCustomerAddress(customerId, customerAddress);
     }
@@ -712,7 +712,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean updateCustomer(int customerId,
-                                  @Optional @Default("#[payload]") @Placement(group = "Customer Attributes to Update") CustomerCustomerEntityToCreate customer) {
+                                  @Default("#[payload]") @Placement(group = "Customer Attributes to Update") CustomerCustomerEntityToCreate customer) {
         return customerClient.updateCustomer(customerId, customer);
     }
 
@@ -756,7 +756,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public int updateStockItem(String productIdOrSku,
-                               @Optional @Default("#[payload]") @Placement(group = "Attributes to Update") CatalogInventoryStockItemUpdateEntity stockItem) {
+                               @Default("#[payload]") @Placement(group = "Attributes to Update") CatalogInventoryStockItemUpdateEntity stockItem) {
         return inventoryClient.updateStockItem(productIdOrSku, stockItem);
     }
 
@@ -810,7 +810,7 @@ public class MagentoCloudConnector {
                                   @Optional String productSku,
                                   @Optional String productIdOrSku,
                                   String linkedProductIdOrSku,
-                                  @Optional @Default("#[payload]") @Placement(group = "Address Attributes to Update") CatalogProductLinkEntity productLinkEntity) {
+                                  @Default("#[payload]") @Placement(group = "Address Attributes to Update") CatalogProductLinkEntity productLinkEntity) {
         return catalogClient.addProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku), linkedProductIdOrSku,
                 productLinkEntity);
     }
@@ -840,7 +840,7 @@ public class MagentoCloudConnector {
     public String createProductAttributeMedia(@Optional Integer productId,
                                               @Optional String productSku,
                                               @Optional String productIdOrSku,
-                                              @Optional @Default("#[payload]") @Placement(group = "Media Attributes") CatalogProductAttributeMediaCreateEntity catalogProductAttributeMediaEntity,
+                                              @Default("#[payload]") @Placement(group = "Media Attributes") CatalogProductAttributeMediaCreateEntity catalogProductAttributeMediaEntity,
                                               @Optional String storeViewIdOrCode,
                                               @Payload Object payload,
                                               MediaMimeType mimeType,
@@ -1181,7 +1181,7 @@ public class MagentoCloudConnector {
                                                @Optional String productSku,
                                                @Optional String productIdOrSku,
                                                String fileName,
-                                               @Optional @Default("#[payload]") @Placement(group = "Media Attributes to Update") CatalogProductAttributeMediaCreateEntity catalogProductAttributeMediaEntity,
+                                               @Default("#[payload]") @Placement(group = "Media Attributes to Update") CatalogProductAttributeMediaCreateEntity catalogProductAttributeMediaEntity,
                                                @Optional String storeViewIdOrCode) {
         return catalogClient.updateProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku), fileName,
                 catalogProductAttributeMediaEntity, storeViewIdOrCode);
@@ -1206,7 +1206,7 @@ public class MagentoCloudConnector {
     public int updateProductAttributeTierPrice(@Optional Integer productId,
                                                @Optional String productSku,
                                                @Optional String productIdOrSku,
-                                               @Optional @Default("#[payload]") @Placement(group = "Tier Price Attributes to Update") CatalogProductTierPriceEntity catalogProductTierPriceEntity) {
+                                               @Default("#[payload]") @Placement(group = "Tier Price Attributes to Update") CatalogProductTierPriceEntity catalogProductTierPriceEntity) {
         return catalogClient.updateProductAttributeTierPrice(ProductIdentifiers.from(productSku, productId, productIdOrSku), catalogProductTierPriceEntity);
     }
 
@@ -1234,7 +1234,7 @@ public class MagentoCloudConnector {
                                      @Optional String productSku,
                                      @Optional String productIdOrSku,
                                      String linkedProductIdOrSku,
-                                     @Optional @Default("#[payload]") @Placement(group = "Link Attributes to Update") CatalogProductLinkEntity catalogProductLinkEntity) {
+                                     @Default("#[payload]") @Placement(group = "Link Attributes to Update") CatalogProductLinkEntity catalogProductLinkEntity) {
         return catalogClient.updateProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku), linkedProductIdOrSku,
                 catalogProductLinkEntity);
     }
@@ -1289,7 +1289,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public int createCategory(int parentId,
-                              @Optional @Default("#[payload]") @Placement(group = "Category Attributes") CatalogCategoryEntityCreate catalogCategoryEntity,
+                              @Default("#[payload]") @Placement(group = "Category Attributes") CatalogCategoryEntityCreate catalogCategoryEntity,
                               @Optional String storeViewIdOrCode) {
         return catalogClient.createCategory(parentId, catalogCategoryEntity, storeViewIdOrCode);
     }
@@ -1416,7 +1416,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean updateCategory(int categoryId,
-                                  @Optional @Default("#[payload]") @Placement(group = "Category Attributes to Update") CatalogCategoryEntityCreate catalogCategoryEntity,
+                                  @Default("#[payload]") @Placement(group = "Category Attributes to Update") CatalogCategoryEntityCreate catalogCategoryEntity,
                                   @Optional String storeViewIdOrCode) {
         return catalogClient.updateCategory(categoryId, catalogCategoryEntity, storeViewIdOrCode);
     }
@@ -1475,7 +1475,7 @@ public class MagentoCloudConnector {
     public int updateInventoryStockItem(@Optional Integer productId,
                                         @Optional String productSku,
                                         @Optional String productIdOrSku,
-                                        @Optional @Default("#[payload]") @Placement(group = "Stock Item Attributes") CatalogInventoryStockItemUpdateEntity catalogInventoryStockItem) {
+                                        @Default("#[payload]") @Placement(group = "Stock Item Attributes") CatalogInventoryStockItemUpdateEntity catalogInventoryStockItem) {
         return catalogClient.updateInventoryStockItem(ProductIdentifiers.from(productSku, productId, productIdOrSku), catalogInventoryStockItem);
     }
 
@@ -1496,7 +1496,7 @@ public class MagentoCloudConnector {
     public int createProduct(String type,
                              int set,
                              String sku,
-                             @Optional @Default("#[payload]")  @Placement(group = "Standard Product Attributes") CatalogProductCreateEntity attributes,
+                             @Default("#[payload]")  @Placement(group = "Standard Product Attributes") CatalogProductCreateEntity attributes,
                              @Placement(group = "Non-standard Product Attributes") @Optional List<AssociativeEntity> additionalAttributes,
                              @Optional String storeViewIdOrCode) {
         return catalogClient.createProduct(type, set, sku, attributes, additionalAttributes, storeViewIdOrCode);
@@ -1644,7 +1644,7 @@ public class MagentoCloudConnector {
     public boolean updateProduct(@Optional Integer productId,
                                  @Optional String productSku,
                                  @Optional String productIdOrSku,
-                                 @Optional @Default("#[payload]") @Placement(group = "Standard Product Attributes to Update") CatalogProductCreateEntity catalogProductEntity,
+                                 @Default("#[payload]") @Placement(group = "Standard Product Attributes to Update") CatalogProductCreateEntity catalogProductEntity,
                                  @Placement(group = "Non-standard Product Attributes to Update") @Optional List<AssociativeEntity> additionalAttributes,
                                  @Optional String storeViewIdOrCode) {
         return catalogClient.updateProduct(ProductIdentifiers.from(productSku, productId, productIdOrSku), catalogProductEntity, additionalAttributes, storeViewIdOrCode);
@@ -1729,7 +1729,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean addShoppingCartProduct(int quoteId,
-                                   @Optional @Default("#[payload]") @Placement(group = "Products attributes") List<ShoppingCartProductEntity> products,
+                                   @Default("#[payload]") @Placement(group = "Products attributes") List<ShoppingCartProductEntity> products,
                                    @Optional String storeId) {
         return shoppingCartClient.addShoppingCartProduct(quoteId, products, storeId);
     }
@@ -1745,7 +1745,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean updateShoppingCartProduct(int quoteId,
-                                      @Optional @Default("#[payload]") @Placement(group = "Products attributes") List<ShoppingCartProductEntity> products,
+                                      @Default("#[payload]") @Placement(group = "Products attributes") List<ShoppingCartProductEntity> products,
                                       @Optional String storeId) {
         return shoppingCartClient.updateShoppingCartProduct(quoteId, products, storeId);
     }
@@ -1761,7 +1761,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean removeShoppingCartProduct(int quoteId,
-                                      @Optional @Default("#[payload]") @Placement(group = "Products attributes") List<ShoppingCartProductEntity> products,
+                                      @Default("#[payload]") @Placement(group = "Products attributes") List<ShoppingCartProductEntity> products,
                                       @Optional String storeId) {
         return shoppingCartClient.removeShoppingCartProduct(quoteId, products, storeId);
     }
@@ -1807,7 +1807,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean setShoppingCartCustomer(int quoteId,
-                                           @Optional @Default("#[payload]") @Placement(group = "Customer attributes") ShoppingCartCustomerEntity customer,
+                                           @Default("#[payload]") @Placement(group = "Customer attributes") ShoppingCartCustomerEntity customer,
                                            @Optional String storeId) {
         return shoppingCartClient.setShoppingCartCustomer(quoteId, customer, storeId);
     }
@@ -1823,7 +1823,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean setShoppingCartCustomerAddresses(int quoteId,
-                                                    @Optional @Default("#[payload]") @Placement(group = "Addresses attributes") List<ShoppingCartCustomerAddressEntity> shoppingCartCustomerAddresses,
+                                                    @Default("#[payload]") @Placement(group = "Addresses attributes") List<ShoppingCartCustomerAddressEntity> shoppingCartCustomerAddresses,
                                                     @Optional String storeId) {
         return shoppingCartClient.setShoppingCartCustomerAddresses(quoteId, shoppingCartCustomerAddresses, storeId);
     }
@@ -1867,7 +1867,7 @@ public class MagentoCloudConnector {
      */
     @Processor
     public boolean setShoppingCartPaymentMethod(int quoteId,
-                                                @Optional @Default("#[payload]") @Placement(group = "Method attributes") ShoppingCartPaymentMethodEntity shoppingCartPaymentMethod,
+                                                @Default("#[payload]") @Placement(group = "Method attributes") ShoppingCartPaymentMethodEntity shoppingCartPaymentMethod,
                                                 @Optional String storeId) {
         return shoppingCartClient.setShoppingCartPaymentMethod(quoteId, shoppingCartPaymentMethod, storeId);
     }
