@@ -8,7 +8,8 @@
 
 package org.mule.module.magento.api;
 
-import com.magento.api.Mage_Api_Model_Server_V2_HandlerPortType;
+import com.magento.api.ArrayOfString;
+import com.magento.api.Mage_Api_Model_Server_Wsi_HandlerPortType;
 import org.apache.commons.lang.BooleanUtils;
 
 import java.lang.reflect.Array;
@@ -50,7 +51,7 @@ public abstract class AbstractMagentoClient
         return provider.getSessionId();
     }
 
-    protected final Mage_Api_Model_Server_V2_HandlerPortType getPort() throws RemoteException
+    protected final Mage_Api_Model_Server_Wsi_HandlerPortType getPort() throws RemoteException
     {
         return provider.getPort();
     }
@@ -59,6 +60,11 @@ public abstract class AbstractMagentoClient
     protected static <T> T[] toArray(Collection<T> collection, Class<T> clazz)
     {
         return collection.toArray((T[]) Array.newInstance(clazz, collection.size()));
+    }
+
+    protected static ArrayOfString toArrayOfString(Collection<String> collection)
+    {
+        return new ArrayOfString(collection.toArray(new String[collection.size()]));
     }
 
     protected static String toIntegerString(boolean value)

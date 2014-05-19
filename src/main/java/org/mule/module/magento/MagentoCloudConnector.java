@@ -157,7 +157,6 @@ public class MagentoCloudConnector {
     	keys.add(this.createKey(CatalogCategoryEntity.class));
     	keys.add(this.createKey(CatalogInventoryStockItemEntity.class));
     	keys.add(this.createKey(CatalogInventoryStockItemUpdateEntity.class));
-    	keys.add(this.createKey(CatalogProductAdditionalAttributesEntity.class));
     	keys.add(this.createKey(CatalogProductAttributeEntity.class));
     	keys.add(this.createKey(CatalogProductAttributeFrontendLabelEntity.class));
     	keys.add(this.createKey(CatalogProductAttributeMediaCreateEntity.class));
@@ -178,7 +177,6 @@ public class MagentoCloudConnector {
     	keys.add(this.createKey(CatalogProductDownloadableLinkEntity.class));
     	keys.add(this.createKey(CatalogProductDownloadableLinkFileEntity.class));
     	keys.add(this.createKey(CatalogProductDownloadableLinkFileInfoEntity.class));
-    	keys.add(this.createKey(CatalogProductDownloadableLinkInfoEntity.class));
     	keys.add(this.createKey(CatalogProductDownloadableLinkSampleEntity.class));
     	keys.add(this.createKey(CatalogProductEntity.class));
     	keys.add(this.createKey(CatalogProductImageEntity.class));
@@ -511,7 +509,7 @@ public class MagentoCloudConnector {
                                      @Default("false") boolean sendEmail,
                                      @Default("false") boolean includeCommentInEmail) {
         return orderClient.createOrderInvoice(orderId, itemsQuantities, comment, sendEmail,
-                includeCommentInEmail);
+                                              includeCommentInEmail);
     }
 
     /**
@@ -811,8 +809,9 @@ public class MagentoCloudConnector {
                                   @Optional String productIdOrSku,
                                   String linkedProductIdOrSku,
                                   @Default("#[payload]") @Placement(group = "Address Attributes to Update") CatalogProductLinkEntity productLinkEntity) {
-        return catalogClient.addProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku), linkedProductIdOrSku,
-                productLinkEntity);
+        return catalogClient.addProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                            linkedProductIdOrSku,
+                                            productLinkEntity);
     }
 
     /**
@@ -846,7 +845,8 @@ public class MagentoCloudConnector {
                                               MediaMimeType mimeType,
                                               @Optional String baseFileName) throws FileNotFoundException {
         return catalogClient.createProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku),
-                catalogProductAttributeMediaEntity, createContent(payload), mimeType, baseFileName, storeViewIdOrCode);
+                                                         catalogProductAttributeMediaEntity, createContent(payload),
+                                                         mimeType, baseFileName, storeViewIdOrCode);
     }
 
     private InputStream createContent(Object content) throws FileNotFoundException {
@@ -885,7 +885,8 @@ public class MagentoCloudConnector {
                                             String fileName)
 
     {
-        return catalogClient.deleteProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku), fileName);
+        return catalogClient.deleteProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                                         fileName);
     }
 
     /**
@@ -910,7 +911,8 @@ public class MagentoCloudConnector {
                                   @Optional String productSku,
                                   @Optional String productIdOrSku,
                                   String linkedProductIdOrSku) {
-        return catalogClient.deleteProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku), linkedProductIdOrSku);
+        return catalogClient.deleteProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                               linkedProductIdOrSku);
     }
 
     /**
@@ -1015,7 +1017,8 @@ public class MagentoCloudConnector {
                                                                      @Optional String productSku,
                                                                      @Optional String productIdOrSku,
                                                                      @Optional String storeViewIdOrCode) {
-        return catalogClient.listProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku), storeViewIdOrCode);
+        return catalogClient.listProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                                       storeViewIdOrCode);
     }
 
     /**
@@ -1097,7 +1100,8 @@ public class MagentoCloudConnector {
     public List<CatalogProductTierPriceEntity> listProductAttributeTierPrices(@Optional Integer productId,
                                                                               @Optional String productSku,
                                                                               @Optional String productIdOrSku) {
-        return catalogClient.listProductAttributeTierPrices(ProductIdentifiers.from(productSku, productId, productIdOrSku));
+        return catalogClient.listProductAttributeTierPrices(
+                ProductIdentifiers.from(productSku, productId, productIdOrSku));
     }
 
     /**
@@ -1183,8 +1187,9 @@ public class MagentoCloudConnector {
                                                String fileName,
                                                @Default("#[payload]") @Placement(group = "Media Attributes to Update") CatalogProductAttributeMediaCreateEntity catalogProductAttributeMediaEntity,
                                                @Optional String storeViewIdOrCode) {
-        return catalogClient.updateProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku), fileName,
-                catalogProductAttributeMediaEntity, storeViewIdOrCode);
+        return catalogClient.updateProductAttributeMedia(ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                                         fileName,
+                                                         catalogProductAttributeMediaEntity, storeViewIdOrCode);
     }
 
 
@@ -1207,7 +1212,8 @@ public class MagentoCloudConnector {
                                                @Optional String productSku,
                                                @Optional String productIdOrSku,
                                                @Default("#[payload]") @Placement(group = "Tier Price Attributes to Update") CatalogProductTierPriceEntity catalogProductTierPriceEntity) {
-        return catalogClient.updateProductAttributeTierPrice(ProductIdentifiers.from(productSku, productId, productIdOrSku), catalogProductTierPriceEntity);
+        return catalogClient.updateProductAttributeTierPrice(
+                ProductIdentifiers.from(productSku, productId, productIdOrSku), catalogProductTierPriceEntity);
     }
 
 
@@ -1235,8 +1241,9 @@ public class MagentoCloudConnector {
                                      @Optional String productIdOrSku,
                                      String linkedProductIdOrSku,
                                      @Default("#[payload]") @Placement(group = "Link Attributes to Update") CatalogProductLinkEntity catalogProductLinkEntity) {
-        return catalogClient.updateProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku), linkedProductIdOrSku,
-                catalogProductLinkEntity);
+        return catalogClient.updateProductLink(type, ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                               linkedProductIdOrSku,
+                                               catalogProductLinkEntity);
     }
 
     /**
@@ -1383,7 +1390,8 @@ public class MagentoCloudConnector {
                                       @Optional Integer productId,
                                       @Optional String productSku,
                                       @Optional String productIdOrSku) {
-        return catalogClient.deleteCategoryProduct(categoryId, ProductIdentifiers.from(productSku, productId, productIdOrSku));
+        return catalogClient.deleteCategoryProduct(categoryId,
+                                                   ProductIdentifiers.from(productSku, productId, productIdOrSku));
     }
 
     /**
@@ -1441,7 +1449,9 @@ public class MagentoCloudConnector {
                                          @Optional String productSku,
                                          @Optional String productIdOrSku,
                                          String position) {
-        return catalogClient.updateCategoryProduct(categoryId, ProductIdentifiers.from(productSku, productId, productIdOrSku), position);
+        return catalogClient.updateCategoryProduct(categoryId,
+                                                   ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                                   position);
     }
 
     /**
@@ -1476,7 +1486,8 @@ public class MagentoCloudConnector {
                                         @Optional String productSku,
                                         @Optional String productIdOrSku,
                                         @Default("#[payload]") @Placement(group = "Stock Item Attributes") CatalogInventoryStockItemUpdateEntity catalogInventoryStockItem) {
-        return catalogClient.updateInventoryStockItem(ProductIdentifiers.from(productSku, productId, productIdOrSku), catalogInventoryStockItem);
+        return catalogClient.updateInventoryStockItem(ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                                      catalogInventoryStockItem);
     }
 
     /**
@@ -1538,12 +1549,12 @@ public class MagentoCloudConnector {
      * @return the product special price attributes
      */
     @Processor
-    public CatalogProductReturnEntity getProductSpecialPrice(@Optional Integer productId,
-                                                             @Optional String productSku,
-                                                             @Optional String productIdOrSku,
-                                                             @Optional String storeViewIdOrCode) {
+    public CatalogProductSpecialPriceReturnEntity getProductSpecialPrice(@Optional Integer productId,
+                                                                         @Optional String productSku,
+                                                                         @Optional String productIdOrSku,
+                                                                         @Optional String storeViewIdOrCode) {
         return catalogClient.getProductSpecialPrice(ProductIdentifiers.from(productSku, productId, productIdOrSku),
-                storeViewIdOrCode);
+                                                    storeViewIdOrCode);
     }
 
     /**
@@ -1571,7 +1582,8 @@ public class MagentoCloudConnector {
                                                  @Optional String storeViewIdOrCode,
                                                  @Placement(group = "Standard Product Attributes to Retrieve") @Optional List<String> attributesNames,
                                                  @Placement(group = "Non-standard Product Attributes to Retrieve") @Optional List<String> additionalAttributeNames) {
-        return catalogClient.getProduct(ProductIdentifiers.from(productSku, productId, productIdOrSku), storeViewIdOrCode, attributesNames, additionalAttributeNames);
+        return catalogClient.getProduct(ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                        storeViewIdOrCode, attributesNames, additionalAttributeNames);
     }
 
     /**
@@ -1620,8 +1632,9 @@ public class MagentoCloudConnector {
                                          @Optional String fromDate,
                                          @Optional String toDate,
                                          @Optional String storeViewIdOrCode) {
-        return catalogClient.updateProductSpecialPrice(ProductIdentifiers.from(productSku, productId, productIdOrSku), specialPrice,
-                fromDate, toDate, storeViewIdOrCode);
+        return catalogClient.updateProductSpecialPrice(ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                                       specialPrice,
+                                                       fromDate, toDate, storeViewIdOrCode);
     }
 
     /**
@@ -1647,7 +1660,8 @@ public class MagentoCloudConnector {
                                  @Default("#[payload]") @Placement(group = "Standard Product Attributes to Update") CatalogProductCreateEntity catalogProductEntity,
                                  @Placement(group = "Non-standard Product Attributes to Update") @Optional List<AssociativeEntity> additionalAttributes,
                                  @Optional String storeViewIdOrCode) {
-        return catalogClient.updateProduct(ProductIdentifiers.from(productSku, productId, productIdOrSku), catalogProductEntity, additionalAttributes, storeViewIdOrCode);
+        return catalogClient.updateProduct(ProductIdentifiers.from(productSku, productId, productIdOrSku),
+                                           catalogProductEntity, additionalAttributes, storeViewIdOrCode);
     }
 
     /**
@@ -1882,7 +1896,8 @@ public class MagentoCloudConnector {
      * @return Payment methods available
      */
     @Processor
-    public ShoppingCartPaymentMethodResponseEntityArray listShoppingCartPaymentMethods(int quoteId, @Optional String storeId) {
+    public ShoppingCartPaymentMethodResponseEntity[] listShoppingCartPaymentMethods(int quoteId,
+                                                                                    @Optional String storeId) {
         return shoppingCartClient.listShoppingCartPaymentMethods(quoteId, storeId);
     }
 

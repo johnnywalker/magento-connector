@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 import java.util.List;
 import java.util.Map;
 
+import com.magento.api.ShoppingCartPaymentMethodResponseEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -25,7 +26,6 @@ import org.mule.api.processor.MessageProcessor;
 import com.magento.api.AssociativeEntity;
 import com.magento.api.ShoppingCartCustomerAddressEntity;
 import com.magento.api.ShoppingCartPaymentMethodEntity;
-import com.magento.api.ShoppingCartPaymentMethodResponseEntityArray;
 
 public class ListShoppingCartPaymentMethodsTestCases extends MagentoTestParent {
 
@@ -59,11 +59,11 @@ public class ListShoppingCartPaymentMethodsTestCases extends MagentoTestParent {
 			MessageProcessor flow = lookupFlowConstruct("list-shopping-cart-payment-methods");
 			MuleEvent response = flow.process(getTestEvent(testObjects));
 			
-			ShoppingCartPaymentMethodResponseEntityArray cartPayments = (ShoppingCartPaymentMethodResponseEntityArray) response.getMessage().getPayload();
+			ShoppingCartPaymentMethodResponseEntity cartPayments = (ShoppingCartPaymentMethodResponseEntity) response.getMessage().getPayload();
 			assertNotNull(cartPayments);
 			System.out.println(cartPayments.getCode());
 			System.out.println(cartPayments.getTitle());
-			for (AssociativeEntity entity : cartPayments.getCc_types()) {
+			for (AssociativeEntity entity : cartPayments.getCc_types().getComplexObjectArray()) {
 				System.out.println(entity.getKey() + " : " + entity.getValue());
 			}
 		}

@@ -10,6 +10,7 @@ package org.mule.module.magento.filters;
 
 import com.magento.api.AssociativeEntity;
 import com.magento.api.ComplexFilter;
+import com.magento.api.ComplexFilterArray;
 import com.magento.api.Filters;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test for {@link FiltersParser}
- * 
+ *
  * @author flbulgarelli
  */
 public class FiltersParserUnitTest
@@ -103,8 +104,8 @@ public class FiltersParserUnitTest
     {
         parse("lteq(customer_id, 156), gt(customer_id, 100), gteq(customer_city_code, 9986)");
     }
-    
-    
+
+
 
     /**
      * Tests that expressions once parsed can be interpreted
@@ -112,8 +113,12 @@ public class FiltersParserUnitTest
     @Test
     public void testFilterCreationWithBinary() throws Exception
     {
-        assertEquals(parse("eq(customer_name, 900)"), new Filters(null,
-            new ComplexFilter[]{new ComplexFilter("customer_name", new AssociativeEntity("eq", "900"))}));
+        assertEquals(parse("eq(customer_name, 900)"), new Filters(
+                null,
+                new ComplexFilterArray(
+                        new ComplexFilter[]{new ComplexFilter("customer_name", new AssociativeEntity("eq", "900"))}
+            )
+        ));
     }
 
     /**
@@ -122,8 +127,12 @@ public class FiltersParserUnitTest
     @Test
     public void testFilterCreationWithUnary() throws Exception
     {
-        assertEquals(parse("notnull(customer_name)"), new Filters(null,
-            new ComplexFilter[]{new ComplexFilter("customer_name", new AssociativeEntity("notnull", ""))}));
+        assertEquals(parse("notnull(customer_name)"), new Filters(
+                null,
+                new ComplexFilterArray(
+                        new ComplexFilter[]{new ComplexFilter("customer_name", new AssociativeEntity("notnull", ""))}
+                )
+        ));
     }
 
     /**
@@ -133,24 +142,33 @@ public class FiltersParserUnitTest
     public void testFilterCreationWithAnd() throws Exception
     {
         assertEquals(parse("notnull(customer_name), lt(customer_city_code, 56)"), // 
-            new Filters(null, new ComplexFilter[]{
+            new Filters(null, new ComplexFilterArray(new ComplexFilter[]{
                 new ComplexFilter("customer_name", new AssociativeEntity("notnull", "")),
-                new ComplexFilter("customer_city_code", new AssociativeEntity("lt", "56"))}));
+                new ComplexFilter("customer_city_code", new AssociativeEntity("lt", "56"))}
+            )));
     }
-    
+
     /**
      * Tests that the apos of a string argument are not added to the filtering value
      */
     @Test
     public void testParseStringArgument() throws Exception
     {
-        assertEquals(new Filters(null, new ComplexFilter[]{new ComplexFilter("name", new AssociativeEntity(
-            "eq", "Hardware"))}), parse("eq(name, 'Hardware')"));
-        assertEquals(new Filters(null, new ComplexFilter[]{new ComplexFilter("name", new AssociativeEntity(
-            "eq", ""))}), parse("eq(name, '')"));
+        assertEquals(new Filters(null,
+                                 new ComplexFilterArray(
+                                         new ComplexFilter[]{
+                                                 new ComplexFilter("name", new AssociativeEntity("eq", "Hardware"))
+                                         }
+                                 )), parse("eq(name, 'Hardware')"));
+        assertEquals(new Filters(null,
+                                 new ComplexFilterArray(
+                                         new ComplexFilter[]{
+                                                 new ComplexFilter("name", new AssociativeEntity("eq", ""))
+                                         }
+                                 )), parse("eq(name, '')"));
     }
-    
-    
+
+
     /**
      * Tests that in expressions can be parsed
      */
@@ -177,14 +195,14 @@ public class FiltersParserUnitTest
     {
         assertEquals(parse("eq(is_active, 0)"), parse("isfalse(is_active)"));
     }
-    
-    
+
+
 
     public Filters parse(String expression) throws ParseException
     {
         return FiltersParser.parse(expression);
     }
-    
-    
+
+
 
 }

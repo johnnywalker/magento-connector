@@ -98,7 +98,7 @@
     </flow>
 
     <flow name="CreateOrderInvoice">
-        <magento:create-order-invoice orderId="#[map-payload:orderId]">
+        <magento:create-order-invoice orderId="#[map-payload:orderId]" comment="HelloWorld">
             <magento:items-quantities>
                 <magento:items-quantity order_item_id="1" qty="10" />
             </magento:items-quantities>

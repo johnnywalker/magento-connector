@@ -53,7 +53,7 @@ public interface MagentoShoppingCartClient<ExceptionType extends Exception>
 
     boolean setShoppingCartPaymentMethod(int quoteId, ShoppingCartPaymentMethodEntity method, String storeId) throws ExceptionType;
 
-    ShoppingCartPaymentMethodResponseEntityArray listShoppingCartPaymentMethods(int quoteId, String storeId) throws ExceptionType;
+    ShoppingCartPaymentMethodResponseEntity[] listShoppingCartPaymentMethods(int quoteId, String storeId) throws ExceptionType;
 
     boolean addShoppingCartCoupon(int quoteId, String couponCode, String storeId) throws ExceptionType;
 

@@ -61,7 +61,7 @@ public class GetCategoryTreeTestCases extends MagentoTestParent {
 			CatalogCategoryTree tree = (CatalogCategoryTree) response.getMessage().getPayload();
 			assertTrue(tree.getCategory_id() == parentCategoryId);
 			
-			CatalogCategoryEntity[] children = tree.getChildren();
+			CatalogCategoryEntity[] children = tree.getChildren().getComplexObjectArray();
 			CatalogCategoryEntity child = children[0]; // We only created 1 child.
 			
 			assertTrue(child.getCategory_id() == childCategoryId);

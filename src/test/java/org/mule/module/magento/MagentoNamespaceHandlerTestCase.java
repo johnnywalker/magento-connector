@@ -24,7 +24,7 @@ public class MagentoNamespaceHandlerTestCase extends FunctionalTestCase {
     }
 
     @Override
-    protected String getConfigResources() {
+    protected String getConfigFile() {
         return "magento-namespace-config.xml";
     }
 

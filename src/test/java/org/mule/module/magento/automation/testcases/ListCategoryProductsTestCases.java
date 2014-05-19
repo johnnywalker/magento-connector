@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 import java.util.HashMap;
 import java.util.List;
 
+import com.magento.api.ArrayOfString;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class ListCategoryProductsTestCases extends MagentoTestParent {
 			testObjects.put("categoryId", categoryId);
 			
 			CatalogProductCreateEntity catalogProductCreateEntity = (CatalogProductCreateEntity) testObjects.get("attributesRef");
-			catalogProductCreateEntity.setCategory_ids(new String[] { String.valueOf(categoryId) } );
+			catalogProductCreateEntity.setCategory_ids(new ArrayOfString(new String[] { String.valueOf(categoryId) } ));
 			
 			MessageProcessor createProductFlow = lookupFlowConstruct("create-product");
 			MuleEvent res2 = createProductFlow.process(getTestEvent(testObjects));

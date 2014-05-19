@@ -24,15 +24,22 @@ public class MagentoBeanUnitTest
         new SalesOrderEntity(),
         createEntity(),
         new CatalogCategoryEntity(10, 45, "hello", 0, 0, 0, null),
-        new CatalogCategoryEntity(10, 45, "hello", 0, 0, 0, new CatalogCategoryEntity[]{}),
         new CatalogCategoryEntity(10, 45, "hello", 0, 0, 0,
-            new CatalogCategoryEntity[]{new CatalogCategoryEntity(5, 99, "bye", 0, 0, 0, null)})};
+                                  new ArrayOfCatalogCategoryEntities(new CatalogCategoryEntity[]{})),
+        new CatalogCategoryEntity(10, 45, "hello", 0, 0, 0,
+                                  new ArrayOfCatalogCategoryEntities(
+                                          new CatalogCategoryEntity[]{
+                                                  new CatalogCategoryEntity(5, 99, "bye", 0, 0, 0, null)}
+                                  ))};
 
     private static CatalogProductCreateEntity createEntity()
     {
         CatalogProductCreateEntity entity = new CatalogProductCreateEntity();
-        entity.setAdditional_attributes(new CatalogProductAdditionalAttributesEntity(null, new AssociativeEntity[]{new AssociativeEntity("baz", "foobar"),
-            new AssociativeEntity("foo", "bar")}));
+        entity.setAdditional_attributes(
+                new AssociativeArray(new AssociativeEntity[]{
+                        new AssociativeEntity("baz", "foobar"),
+                        new AssociativeEntity("foo", "bar")
+                }));
         return entity;
     }
 

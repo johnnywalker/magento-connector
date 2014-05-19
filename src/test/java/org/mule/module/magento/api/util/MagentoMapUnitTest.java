@@ -10,11 +10,13 @@ package org.mule.module.magento.api.util;
 
 import com.magento.api.SalesOrderEntity;
 import com.magento.api.SalesOrderStatusHistoryEntity;
+import com.magento.api.SalesOrderStatusHistoryEntityArray;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -47,9 +49,12 @@ public class MagentoMapUnitTest
     public void testMagentoArrayAttributes() throws Exception
     {
         SalesOrderEntity magentoObject = new SalesOrderEntity();
-        magentoObject.setStatus_history(new SalesOrderStatusHistoryEntity[]{new SalesOrderStatusHistoryEntity()});
+        magentoObject.setStatus_history(new SalesOrderStatusHistoryEntityArray(
+                new SalesOrderStatusHistoryEntity[]{new SalesOrderStatusHistoryEntity()}));
         Map<String, Object> map = MagentoMap.toMap(magentoObject);
-        assertThat(map.get("status_history"), instanceOf(List.class));
+        assertThat(map.get("status_history"), instanceOf(MagentoMap.class));
+        assertThat(((MagentoMap)map.get("status_history")).get("class").toString(),
+                   equalTo(SalesOrderStatusHistoryEntityArray.class.toString()));
     }
 
     @Test(expected = IllegalArgumentException.class)

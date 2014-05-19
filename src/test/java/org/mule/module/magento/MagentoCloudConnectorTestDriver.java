@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.magento.api.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,17 +25,6 @@ import org.junit.Test;
 import org.mule.module.magento.api.MagentoException;
 import org.mule.module.magento.api.catalog.model.MediaMimeType;
 import org.springframework.core.io.ClassPathResource;
-
-import com.magento.api.CatalogCategoryEntityCreate;
-import com.magento.api.CatalogCategoryInfo;
-import com.magento.api.CatalogCategoryTree;
-import com.magento.api.CatalogInventoryStockItemEntity;
-import com.magento.api.CatalogInventoryStockItemUpdateEntity;
-import com.magento.api.CatalogProductCreateEntity;
-import com.magento.api.CatalogProductReturnEntity;
-import com.magento.api.CustomerCustomerEntityToCreate;
-import com.magento.api.DirectoryCountryEntity;
-import com.magento.api.SalesOrderEntity;
 
 /**
  * Integration test of the {@link MagentoCloudConnector}
@@ -369,8 +359,9 @@ public class MagentoCloudConnectorTestDriver
             productId = connector.createProduct("simple", 4, "AK4596", null, null, null);
             assertEquals(originalProductsCount + 1, connector.listProducts(null, null).size());
             connector.updateProductSpecialPrice(null, null, productId.toString(), "6953.6", "2011-30-01", null, null);
-            CatalogProductReturnEntity productSpecialPrice = connector.getProductSpecialPrice(productId, null, null,
-                    null);
+            CatalogProductSpecialPriceReturnEntity
+                    productSpecialPrice = connector.getProductSpecialPrice(productId, null, null,
+                                                                           null);
             assertNotNull(productSpecialPrice);
             System.out.printf("Special price:%s%n", productSpecialPrice);
         }
@@ -483,9 +474,9 @@ public class MagentoCloudConnectorTestDriver
     {
         CatalogCategoryTree categoryTree = connector.getCategoryTree(String.valueOf(ROOT_CATEGORY_ID), null);
         assertEquals(ROOT_CATEGORY_ID, categoryTree.getCategory_id());
-        assertEquals(CATEGORY_ID_1, categoryTree.getChildren()[0].getCategory_id());
-        assertEquals(CATEGORY_ID_3, categoryTree.getChildren()[1].getCategory_id());
-        assertEquals(CATEGORY_ID_2, categoryTree.getChildren()[2].getCategory_id());
+        assertEquals(CATEGORY_ID_1, categoryTree.getChildren().getComplexObjectArray(0).getCategory_id());
+        assertEquals(CATEGORY_ID_3, categoryTree.getChildren().getComplexObjectArray(1).getCategory_id());
+        assertEquals(CATEGORY_ID_2, categoryTree.getChildren().getComplexObjectArray(2).getCategory_id());
     }
     
     /**

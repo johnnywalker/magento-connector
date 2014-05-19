@@ -104,7 +104,7 @@ public class GetOrderTestCases extends MagentoTestParent {
 			assertTrue(Integer.parseInt(order.getIncrement_id()) == Integer.parseInt(orderId));
 			assertTrue(order.getShipping_method().equals(shippingMethod));
 			assertTrue(order.getPayment().getMethod().equals(paymentMethod.getMethod()));
-			SalesOrderItemEntity[] products = order.getItems();
+			SalesOrderItemEntity[] products = order.getItems().getComplexObjectArray();
 			for (SalesOrderItemEntity product : products) {
 				int productId = Integer.parseInt(product.getProduct_id());
 				assertTrue(productIds.contains(productId));

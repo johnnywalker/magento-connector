@@ -198,7 +198,8 @@ public interface MagentoCatalogClient<ExceptionType extends Exception>
      * @param storeView
      * @return
      */
-    CatalogProductReturnEntity getProductSpecialPrice(@NotNull ProductIdentifier productId, String storeView)
+    CatalogProductSpecialPriceReturnEntity getProductSpecialPrice(@NotNull ProductIdentifier productId,
+                                                                  String storeView)
         throws ExceptionType;
 
     /**
